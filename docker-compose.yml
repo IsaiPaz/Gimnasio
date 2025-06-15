@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: gym_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}  
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"  
+    volumes:
+      - db_data_nuevo:/var/lib/mysql  
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: gym_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8085:80"  
+
+volumes:
+  db_data_nuevo:
