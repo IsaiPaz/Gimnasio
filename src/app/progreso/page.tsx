@@ -92,57 +92,118 @@ export default function ProgresoPage() {
   if (!session) return <p className="text-center mt-10">Cargando...</p>;
 
   return (
-    <main className="min-h-screen bg-gray-100 p-4 md:p-8">
+    <main className="min-h-screen bg-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
         {/* Columna del Formulario */}
-        <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Registrar Nuevo Progreso</h2>
+        <div className="lg:col-span-1 bg-white/90 p-6 rounded-2xl shadow-2xl border border-blue-200">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-extrabold text-blue-900 drop-shadow-lg tracking-tight flex-1">
+              Registrar Nuevo Progreso
+            </h2>
+            <button
+              onClick={() => router.push('/dashboard')}
+              className="ml-4 px-4 py-2 rounded-lg bg-blue-700 text-white font-bold shadow hover:bg-blue-800 transition"
+              title="Regresar al Dashboard"
+            >
+              ← 
+            </button>
+          </div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="peso" className="block text-sm font-medium text-gray-700">Peso (kg)</label>
-              <input type="number" step="0.5" name="peso" value={formData.peso} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+              <label htmlFor="peso" className="block text-base font-semibold text-blue-900 mb-1">Peso (kg)</label>
+              <input
+                type="number"
+                step="0.5"
+                min="0"
+                name="peso"
+                value={formData.peso}
+                onChange={handleChange}
+                className="mt-1 block w-full border border-blue-300 rounded-md shadow-sm placeholder-blue-300 text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+              />
             </div>
-            <fieldset className="border p-4 rounded-md">
-              <legend className="text-sm font-medium text-gray-700 px-2">Medidas (cm)</legend>
+            <fieldset className="border border-blue-200 p-4 rounded-md">
+              <legend className="text-base font-semibold text-blue-900 px-2">Medidas (cm)</legend>
               <div className="grid grid-cols-3 gap-2">
-                <div><label htmlFor="pecho" className="text-xs">Pecho</label><input type="number" step="0.5" name="pecho" value={formData.pecho} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"/></div>
-                <div><label htmlFor="cintura" className="text-xs">Cintura</label><input type="number" step="0.5" name="cintura" value={formData.cintura} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"/></div>
-                <div><label htmlFor="brazos" className="text-xs">Brazos</label><input type="number" step="0.5" name="brazos" value={formData.brazos} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"/></div>
+                <div>
+                  <label htmlFor="pecho" className="text-xs text-blue-900">Pecho</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    name="pecho"
+                    value={formData.pecho}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border border-blue-300 rounded-md shadow-sm placeholder-blue-300 text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="cintura" className="text-xs text-blue-900">Cintura</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    name="cintura"
+                    value={formData.cintura}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border border-blue-300 rounded-md shadow-sm placeholder-blue-300 text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="brazos" className="text-xs text-blue-900">Brazos</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    name="brazos"
+                    value={formData.brazos}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border border-blue-300 rounded-md shadow-sm placeholder-blue-300 text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+                  />
+                </div>
               </div>
             </fieldset>
-             <div>
-              <label htmlFor="porcentajeGrasa" className="block text-sm font-medium text-gray-700">% Grasa Corporal</label>
-              <input type="number" step="0.5" name="porcentajeGrasa" value={formData.porcentajeGrasa} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+            <div>
+              <label htmlFor="porcentajeGrasa" className="block text-base font-semibold text-blue-900 mb-1">% Grasa Corporal</label>
+              <input
+                type="number"
+                step="0.5"
+                min="0"
+                name="porcentajeGrasa"
+                value={formData.porcentajeGrasa}
+                onChange={handleChange}
+                className="mt-1 block w-full border border-blue-300 rounded-md shadow-sm placeholder-blue-300 text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+              />
             </div>
             <div>
-              <label htmlFor="observaciones" className="block text-sm font-medium text-gray-700">Observaciones</label>
-              <textarea name="observaciones" rows={3} value={formData.observaciones} onChange={handleChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+              <label htmlFor="observaciones" className="block text-base font-semibold text-blue-900 mb-1">Observaciones</label>
+              <textarea name="observaciones" rows={3} value={formData.observaciones} onChange={handleChange}
+                className="mt-1 block w-full border border-blue-300 rounded-md shadow-sm placeholder-blue-300 text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"></textarea>
             </div>
-            <button type="submit" disabled={isLoading} className="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-700 disabled:bg-indigo-400">
+            <button type="submit" disabled={isLoading}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-bold text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 transition">
               {isLoading ? 'Guardando...' : 'Guardar Progreso'}
             </button>
-            {message && <p className={`mt-2 text-sm ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>{message.text}</p>}
+            {message && <p className={`mt-2 text-base font-semibold text-center ${message.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>{message.text}</p>}
           </form>
         </div>
 
         {/* Columna del Historial */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Historial de Progreso</h2>
+        <div className="lg:col-span-2 bg-white/90 p-6 rounded-2xl shadow-2xl border border-blue-200">
+          <h2 className="text-2xl font-extrabold text-blue-900 mb-4 drop-shadow-lg tracking-tight">Historial de Progreso</h2>
           <div className="space-y-4 max-h-[70vh] overflow-y-auto">
             {historial.length > 0 ? historial.map(p => (
-              <div key={p.idProgreso} className="p-4 border rounded-md">
-                <p className="font-semibold text-gray-700">{new Date(p.fechaRegistro).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm mt-2">
+              <div key={p.idProgreso} className="p-4 border border-blue-100 rounded-xl bg-white/95 shadow hover:shadow-lg transition">
+                <p className="font-bold text-blue-900">{new Date(p.fechaRegistro).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-base mt-2 text-blue-900">
                   {p.peso && <p><strong>Peso:</strong> {p.peso} kg</p>}
                   {p.porcentajeGrasa && <p><strong>Grasa:</strong> {p.porcentajeGrasa}%</p>}
                   {p.medidasCorporales?.pecho && <p><strong>Pecho:</strong> {p.medidasCorporales.pecho} cm</p>}
                   {p.medidasCorporales?.cintura && <p><strong>Cintura:</strong> {p.medidasCorporales.cintura} cm</p>}
                   {p.medidasCorporales?.brazos && <p><strong>Brazos:</strong> {p.medidasCorporales.brazos} cm</p>}
                 </div>
-                {p.observaciones && <p className="text-sm text-gray-600 mt-2"><em>"{p.observaciones}"</em></p>}
+                {p.observaciones && <p className="text-sm text-blue-700 mt-2"><em>"{p.observaciones}"</em></p>}
               </div>
-            )) : <p>No hay registros de progreso todavía. ¡Añade uno para empezar!</p>}
+            )) : <p className="text-blue-900 text-center font-medium">No hay registros de progreso todavía. ¡Añade uno para empezar!</p>}
           </div>
         </div>
       </div>

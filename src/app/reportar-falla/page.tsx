@@ -69,30 +69,70 @@ export default function ReportarFallaPage() {
   if (!session) return <p className="text-center mt-10">Cargando...</p>;
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-gray-100 p-8">
-      <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Reportar Falla de Equipo</h1>
-        
+    <main className="flex min-h-screen flex-col items-center bg-white p-8">
+      <div className="w-full max-w-2xl bg-white/90 rounded-2xl shadow-2xl border border-blue-200 p-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-blue-900 drop-shadow-lg tracking-tight flex-1">
+            Reportar Falla de Equipo
+          </h1>
+          <button
+            onClick={() => router.push('/dashboard')}
+            className="ml-4 px-5 py-2 rounded-lg bg-blue-700 text-white font-bold shadow hover:bg-blue-800 transition"
+            title="Regresar al Dashboard"
+          >
+            ← 
+          </button>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="equipo" className="block text-sm font-medium text-gray-700">1. Selecciona el Equipo Dañado</label>
-            <select id="equipo" value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)} required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            <label htmlFor="equipo" className="block text-base font-semibold text-blue-900 mb-1">
+              1. Selecciona el Equipo Dañado
+            </label>
+            <select
+              id="equipo"
+              value={equipoSeleccionado}
+              onChange={(e) => setEquipoSeleccionado(e.target.value)}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-blue-300 rounded-md shadow-sm text-blue-900 font-medium bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+            >
               <option value="" disabled>-- Elige un equipo --</option>
-              {equipos.map(eq => <option key={eq.idEquipo} value={eq.idEquipo}>{eq.nombre} ({eq.marca})</option>)}
+              {equipos.map(eq => (
+                <option key={eq.idEquipo} value={eq.idEquipo}>
+                  {eq.nombre} ({eq.marca})
+                </option>
+              ))}
             </select>
           </div>
           <div>
-            <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">2. Describe la Falla</label>
-            <textarea id="descripcion" value={descripcionFalla} onChange={(e) => setDescripcionFalla(e.target.value)} required rows={4} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Ej: La pantalla no enciende, hace un ruido extraño al usarla, etc."></textarea>
+            <label htmlFor="descripcion" className="block text-base font-semibold text-blue-900 mb-1">
+              2. Describe la Falla
+            </label>
+            <textarea
+              id="descripcion"
+              value={descripcionFalla}
+              onChange={(e) => setDescripcionFalla(e.target.value)}
+              required
+              rows={4}
+              className="mt-1 block w-full px-3 py-2 border border-blue-300 rounded-md shadow-sm placeholder-blue-300 text-blue-900 font-medium bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+              placeholder="Ej: La pantalla no enciende, hace un ruido extraño al usarla, etc."
+            ></textarea>
           </div>
-
           <div>
-            <button type="submit" disabled={isLoading || session.rol !== 'miembro'} className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-md hover:bg-orange-700 disabled:bg-gray-400 transition-colors">
-              {session.rol !== 'miembro' ? 'Solo los miembros pueden reportar fallas' : (isLoading ? 'Enviando Reporte...' : 'Enviar Reporte de Falla')}
+            <button
+              type="submit"
+              disabled={isLoading || session.rol !== 'miembro'}
+              className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-lg shadow hover:bg-orange-700 disabled:bg-blue-200 transition"
+            >
+              {session.rol !== 'miembro'
+                ? 'Solo los miembros pueden reportar fallas'
+                : (isLoading ? 'Enviando Reporte...' : 'Enviar Reporte de Falla')}
             </button>
           </div>
-
-          {message && <div className={`p-4 mt-4 rounded-md text-sm text-center ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{message.text}</div>}
+          {message && (
+            <div className={`p-4 mt-4 rounded-md text-base font-semibold text-center ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              {message.text}
+            </div>
+          )}
         </form>
       </div>
     </main>

@@ -97,44 +97,105 @@ export default function AsignacionPage() {
   if (!session) return <p className="text-center mt-10">Cargando...</p>;
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-gray-100 p-8">
-      <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Asignar Entrenador Personal</h1>
-        
+    <main className="flex min-h-screen flex-col items-center bg-white p-8">
+      <div className="w-full max-w-2xl bg-white/90 rounded-2xl shadow-2xl border border-blue-200 p-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-blue-900 drop-shadow-lg tracking-tight flex-1">
+            Asignar Entrenador Personal
+          </h1>
+          <button
+            onClick={() => router.push('/dashboard')}
+            className="ml-4 px-5 py-2 rounded-lg bg-blue-700 text-white font-bold shadow hover:bg-blue-800 transition"
+            title="Regresar al Dashboard"
+          >
+            ← 
+          </button>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
-            <h2 className="text-xl font-semibold mb-3">1. Elige tu Entrenador</h2>
+            <h2 className="text-xl font-semibold text-blue-900 mb-3">1. Elige tu Entrenador</h2>
             <div className="space-y-3">
               {entrenadores.map(e => (
-                <label key={e.idUsuario} className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${entrenadorSeleccionado === e.idUsuario ? 'bg-indigo-50 border-indigo-500' : 'hover:bg-gray-50'}`}>
-                  <input type="radio" name="entrenador" value={e.idUsuario} checked={entrenadorSeleccionado === e.idUsuario} onChange={handleEntrenadorChange} className="h-5 w-5 text-indigo-600"/>
-                  <div className="ml-4"><p className="font-bold">{e.nombreCompleto}</p><p className="text-sm text-gray-600">{e.especialidad}</p></div>
+                <label
+                  key={e.idUsuario}
+                  className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
+                    entrenadorSeleccionado === e.idUsuario
+                      ? 'bg-blue-50 border-blue-500'
+                      : 'border-blue-100 bg-white hover:bg-blue-50'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="entrenador"
+                    value={e.idUsuario}
+                    checked={entrenadorSeleccionado === e.idUsuario}
+                    onChange={handleEntrenadorChange}
+                    className="h-5 w-5 text-blue-700 border-blue-300 focus:ring-blue-500"
+                  />
+                  <div className="ml-4">
+                    <p className="font-bold text-blue-900">{e.nombreCompleto}</p>
+                    <p className="text-sm text-blue-700">{e.especialidad}</p>
+                  </div>
                 </label>
               ))}
             </div>
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mb-3">2. Elige tu Rutina</h2>
+            <h2 className="text-xl font-semibold text-blue-900 mb-3">2. Elige tu Rutina</h2>
             <div className={`space-y-3 transition-opacity duration-300 ${!entrenadorSeleccionado ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}>
-               {isRutinasLoading && <p className="text-gray-500">Cargando rutinas...</p>}
-               {!isRutinasLoading && entrenadorSeleccionado && rutinas.length === 0 && <p className="text-gray-500">Este entrenador no tiene rutinas disponibles.</p>}
-               {rutinas.map(r => (
-                <label key={r.idRutina} className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${rutinaSeleccionada === r.idRutina ? 'bg-indigo-50 border-indigo-500' : 'hover:bg-gray-50'}`}>
-                  <input type="radio" name="rutina" value={r.idRutina} checked={rutinaSeleccionada === r.idRutina} onChange={(ev) => setRutinaSeleccionada(ev.target.value)} className="h-5 w-5 text-indigo-600"/>
-                  <div className="ml-4"><p className="font-bold">{r.nombre} <span className="text-xs font-normal bg-gray-200 p-1 rounded">{r.dificultad}</span></p><p className="text-sm text-gray-600">{r.descripcion}</p></div>
+              {isRutinasLoading && <p className="text-blue-700">Cargando rutinas...</p>}
+              {!isRutinasLoading && entrenadorSeleccionado && rutinas.length === 0 && (
+                <p className="text-blue-700">Este entrenador no tiene rutinas disponibles.</p>
+              )}
+              {rutinas.map(r => (
+                <label
+                  key={r.idRutina}
+                  className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
+                    rutinaSeleccionada === r.idRutina
+                      ? 'bg-blue-50 border-blue-500'
+                      : 'border-blue-100 bg-white hover:bg-blue-50'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="rutina"
+                    value={r.idRutina}
+                    checked={rutinaSeleccionada === r.idRutina}
+                    onChange={(ev) => setRutinaSeleccionada(ev.target.value)}
+                    className="h-5 w-5 text-blue-700 border-blue-300 focus:ring-blue-500"
+                  />
+                  <div className="ml-4">
+                    <p className="font-bold text-blue-900">
+                      {r.nombre}{' '}
+                      <span className="text-xs font-normal bg-blue-100 text-blue-800 px-2 py-1 rounded ml-2">
+                        {r.dificultad}
+                      </span>
+                    </p>
+                    <p className="text-sm text-blue-700">{r.descripcion}</p>
+                  </div>
                 </label>
               ))}
             </div>
           </div>
 
           <div>
-            <button type="submit" disabled={isLoading || !rutinaSeleccionada || session.rol !== 'miembro'} className="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 disabled:bg-gray-400 transition-colors">
-              {session.rol !== 'miembro' ? 'Solo los miembros pueden asignarse un entrenador' : (isLoading ? 'Asignando...' : 'Confirmar Asignación')}
+            <button
+              type="submit"
+              disabled={isLoading || !rutinaSeleccionada || session.rol !== 'miembro'}
+              className="w-full bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow hover:bg-blue-800 disabled:bg-blue-200 transition"
+            >
+              {session.rol !== 'miembro'
+                ? 'Solo los miembros pueden asignarse un entrenador'
+                : (isLoading ? 'Asignando...' : 'Confirmar Asignación')}
             </button>
           </div>
 
-          {message && <div className={`p-4 mt-4 rounded-md text-sm text-center ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{message.text}</div>}
+          {message && (
+            <div className={`p-4 mt-4 rounded-md text-base font-semibold text-center ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              {message.text}
+            </div>
+          )}
         </form>
       </div>
     </main>

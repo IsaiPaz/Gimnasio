@@ -77,39 +77,71 @@ export default function MantenimientoAdminPage() {
     }
   };
 
-  if (!session) return <p>Cargando...</p>;
+  if (!session) return <p className="text-center text-lg font-semibold text-gray-800">Cargando...</p>;
 
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Gestión de Mantenimiento</h1>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          {isLoading && <p>Cargando notificaciones...</p>}
-          {error && <p className="text-red-500">{error}</p>}
-          {!isLoading && notificaciones.length === 0 && <p>No hay reportes de fallas activos.</p>}
-          <div className="space-y-4">
+    <main className="min-h-screen bg-white p-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-extrabold text-blue-900 drop-shadow-lg text-center tracking-tight flex-1">
+            Gestión de Mantenimiento
+          </h1>
+          <button
+            onClick={() => router.push('/dashboard')}
+            className="ml-4 px-5 py-2 rounded-lg bg-blue-700 text-white font-bold shadow hover:bg-blue-800 transition"
+            title="Regresar al Dashboard"
+          >
+            ←
+          </button>
+        </div>
+        <div className="bg-white/90 p-8 rounded-2xl shadow-2xl border border-blue-200">
+          {isLoading && <p className="text-blue-700 font-medium text-center">Cargando notificaciones...</p>}
+          {error && <p className="text-red-600 font-semibold text-center">{error}</p>}
+          {!isLoading && notificaciones.length === 0 && (
+            <p className="text-gray-700 text-center font-medium">No hay reportes de fallas activos.</p>
+          )}
+          <div className="space-y-6">
             {notificaciones.map(n => (
-              <div key={n.idNotificacion} className="border p-4 rounded-lg flex justify-between items-center">
-                <div>
-                  <p className="font-bold text-lg">{n.nombreEquipo}</p>
-                  <p className="text-sm text-gray-600">Falla reportada por <span className="font-semibold">{n.nombreMiembro}</span></p>
-                  <p className="text-sm text-gray-500 italic mt-1">"{n.descripcionFalla}"</p>
-                   <p className="text-xs text-gray-400">Reportado el: {new Date(n.fechaReporte).toLocaleString()}</p>
+              <div
+                key={n.idNotificacion}
+                className="border border-blue-100 bg-white/95 p-6 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md hover:shadow-xl transition-shadow"
+              >
+                <div className="flex-1">
+                  <p className="font-bold text-xl text-blue-900 mb-1">{n.nombreEquipo}</p>
+                  <p className="text-base text-gray-800">
+                    Falla reportada por <span className="font-semibold text-blue-700">{n.nombreMiembro}</span>
+                  </p>
+                  <p className="text-base text-gray-700 italic mt-2">"{n.descripcionFalla}"</p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Reportado el: <span className="font-semibold">{new Date(n.fechaReporte).toLocaleString()}</span>
+                  </p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <span className={`px-3 py-1 text-xs font-medium rounded-full ${n.estadoEquipo === 'Dañado' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                        {n.estadoEquipo}
-                    </span>
-                    <select 
-                        value={n.estadoEquipo}
-                        onChange={(e) => handleEstadoChange(n.idEquipo, e.target.value as EquipoEstado)}
-                        className="border-gray-300 rounded-md shadow-sm"
-                    >
-                        <option value="Dañado">Dañado</option>
-                        <option value="En Mantenimiento">En Mantenimiento</option>
-                        <option value="Operativo">Operativo</option>
-                        <option value="De Baja">De Baja</option>
-                    </select>
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mt-4 md:mt-0 md:ml-8">
+                  <span
+                    className={`px-4 py-1 text-sm font-bold rounded-full border shadow-sm
+                      ${
+                        n.estadoEquipo === 'Dañado'
+                          ? 'bg-red-200 text-red-900 border-red-300'
+                          : n.estadoEquipo === 'En Mantenimiento'
+                          ? 'bg-yellow-200 text-yellow-900 border-yellow-300'
+                          : n.estadoEquipo === 'Operativo'
+                          ? 'bg-green-200 text-green-900 border-green-300'
+                          : 'bg-gray-300 text-gray-900 border-gray-400'
+                      }
+                    `}
+                  >
+                    {n.estadoEquipo}
+                  </span>
+                  <select
+                    value={n.estadoEquipo}
+                    onChange={(e) => handleEstadoChange(n.idEquipo, e.target.value as EquipoEstado)}
+                    className="border-blue-300 rounded-md shadow-sm px-3 py-2 text-base font-medium text-blue-900 bg-blue-50 focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition"
+                  >
+                    <option value="Dañado">Dañado</option>
+                    <option value="En Mantenimiento">En Mantenimiento</option>
+                    <option value="Operativo">Operativo</option>
+                    <option value="De Baja">De Baja</option>
+                  </select>
                 </div>
               </div>
             ))}
